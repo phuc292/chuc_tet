@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Tết 2026 - Bính Ngọ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0a0f1e 0%, #1a1f2f 100%);
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Canvas cho pháo hoa */
+        #fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Container chính */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 50px 70px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+                        0 0 0 2px rgba(255, 215, 0, 0.3),
+                        0 0 20px rgba(255, 215, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            position: relative;
+            z-index: 2;
+            max-width: 90%;
+            animation: glowPulse 3s infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 215, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.8); }
+        }
+
+        /* Hiệu ứng chữ vàng */
+        h1 {
+            color: #FFD700;
+            font-size: 4em;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5),
+                         0 0 20px rgba(255, 215, 0, 0.3),
+                         2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: titleBounce 2s infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 3em;
+            margin: 15px 0;
+            text-shadow: 0 0 15px #FF6B6B, 0 0 30px #FFD700;
+            background: linear-gradient(45deg, #FFD700, #FF6B6B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(20deg); }
+            100% { filter: hue-rotate(0deg); }
+        }
+
+        .message {
+            font-size: 1.8em;
+            color: #fff;
+            line-height: 2;
+            margin: 30px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .message p {
+            margin: 15px 0;
+            opacity: 0;
+            animation: slideIn 0.5s forwards;
+        }
+
+        .message p:nth-child(1) { animation-delay: 0.2s; }
+        .message p:nth-child(2) { animation-delay: 0.4s; }
+        .message p:nth-child(3) { animation-delay: 0.6s; }
+        .message p:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .year {
+            font-size: 2.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #fff;
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 60px;
+            margin: 20px 0;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .signature {
+            font-size: 1.3em;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 30px;
+            font-style: italic;
+            border-top: 2px dashed #FFD700;
+            padding-top: 20px;
+        }
+
+        /* Nút bấm để bắn thêm pháo hoa */
+        .fire-btn {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            color: #fff;
+            font-size: 1.2em;
+            padding: 12px 30px;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s;
+            border: 2px solid #fff;
+        }
+
+        .fire-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 2em; }
+            .message { font-size: 1.3em; }
+            .year { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="fireworks-canvas"></canvas>
+    
+    <div class="container">
+        <h1>🐉 CHÚC MỪNG NĂM MỚI 🐎</h1>
+        <h2>BÍNH NGỌ 2026</h2>
+        
+        <div class="message">
+            <p>🌸 Năm mới an khang - Thịnh vượng phát tài 🌸</p>
+            <p>🏮 Sức khỏe dồi dào - Vạn sự như ý 🏮</p>
+            <p>💮 Công danh thăng tiến - Gia đình hạnh phúc 💮</p>
+            <p>🧧 Tiền vào như nước - Lộc đến đầy nhà 🧧</p>
+        </div>
+
+        <div class="year">
+            ✨ Bính Ngọ 2026 ✨
+        </div>
+
+        <button class="fire-btn" onclick="launchFireworks()">
+            🎆 BẤM VÀO ĐÂY ĐỂ BẮN PHÁO HOA 🎆
+        </button>
+
+        <div class="signature">
+            💝 Gửi đến bạn và gia đình những lời chúc tốt đẹp nhất! 💝
+        </div>
+    </div>
+
+    <script>
+        // ========== HIỆU ỨNG PHÁO HOA ==========
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Resize canvas
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Lớp Particle cho pháo hoa
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 8,
+                    y: (Math.random() - 0.5) * 8
+                };
+                this.alpha = 1;
+                this.friction = 0.99;
+                this.gravity = 0.05;
+                this.size = Math.random() * 3 + 2;
+            }
+
+            update() {
+                this.velocity.x *= this.friction;
+                this.velocity.y *= this.friction;
+                this.velocity.y += this.gravity;
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= 0.01;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        let particles = [];
+
+        // Tạo pháo hoa
+        function createFirework(x, y) {
+            const colors = [
+                '#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', 
+                '#96CEB4', '#FFEEAD', '#D4A5A5', '#9B59B6',
+                '#3498DB', '#E74C3C', '#F1C40F', '#2ECC71'
+            ];
+            
+            const particleCount = 100;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        // Bắn pháo hoa tự động
+        function launchFireworks() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height * 0.6;
+            createFirework(x, y);
+            
+            // Thêm pháo hoa thứ 2
+            setTimeout(() => {
+                const x2 = Math.random() * canvas.width;
+                const y2 = Math.random() * canvas.height * 0.6;
+                createFirework(x2, y2);
+            }, 200);
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Tạo hiệu ứng mờ dần
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Update và vẽ particles
+            particles.forEach((particle, index) => {
+                if (particle.alpha <= 0) {
+                    particles.splice(index, 1);
+                } else {
+                    particle.update();
+                    particle.draw();
+                }
+            });
+        }
+        
+        animate();
+
+        // Tự động bắn pháo hoa khi load trang
+        window.onload = function() {
+            // Bắn 5 phát pháo hoa khi mở trang
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    launchFireworks();
+                }, i * 300);
+            }
+            
+            // Tiếp tục bắn pháo hoa mỗi 2 giây
+            setInterval(launchFireworks, 2000);
+        };
+
+        // Bắn pháo hoa khi click vào bất kỳ đâu
+        document.addEventListener('click', function(e) {
+            createFirework(e.clientX, e.clientY);
+        });
+
+        // Hiệu ứng đặc biệt cho màn hình cảm ứng
+        document.addEventListener('touchstart', function(e) {
+            const touch = e.touches[0];
+            createFirework(touch.clientX, touch.clientY);
+        });
+
+        // Thêm hiệu ứng pháo hoa theo chuột di chuyển (giới hạn để tránh lag)
+        let mouseMoveTimer;
+        document.addEventListener('mousemove', function(e) {
+            clearTimeout(mouseMoveTimer);
+            mouseMoveTimer = setTimeout(() => {
+                if (Math.random() > 0.7) { // 30% cơ hội tạo pháo hoa khi di chuột
+                    createFirework(e.clientX, e.clientY);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
